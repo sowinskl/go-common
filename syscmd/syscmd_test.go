@@ -51,8 +51,10 @@ func TestQuiet(t *testing.T) {
 	}
 }
 
+type testKey struct{}
+
 func TestWithContext(t *testing.T) {
-	ctx := context.WithValue(context.Background(), "test", "value")
+	ctx := context.WithValue(context.Background(), testKey{}, "value")
 	cmd := New().WithContext(ctx)
 	if cmd.ctx != ctx {
 		t.Errorf("Expected context to be set")
