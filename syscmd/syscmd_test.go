@@ -11,8 +11,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-type testKey struct{}
-
 func TestNew(t *testing.T) {
 	ctx := context.Background()
 	cmd := New(ctx)
