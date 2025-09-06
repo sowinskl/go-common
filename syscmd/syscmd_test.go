@@ -171,7 +171,7 @@ func TestParentContext_MultipleConfigurations(t *testing.T) {
 	parentCtx, parentCancel := context.WithCancel(context.Background())
 
 	// Create commands with different configurations but same parent context
-	commands := []*Command{
+	commands := []*Process{
 		New(parentCtx).Timeout(5 * time.Second),                               // Quick
 		New(parentCtx).Timeout(30*time.Second).Retry(3, 2*time.Second),        // Resilient
 		New(parentCtx).Timeout(45*time.Second).Retry(2, 500*time.Millisecond), // Custom
@@ -185,7 +185,7 @@ func TestParentContext_MultipleConfigurations(t *testing.T) {
 	// Start all commands
 	for i, cmd := range commands {
 		wg.Add(1)
-		go func(cmdIndex int, command *Command) {
+		go func(cmdIndex int, command *Process) {
 			defer wg.Done()
 			start := time.Now()
 			_, err := command.Execute("sleep", "20")
@@ -298,7 +298,7 @@ func TestParentContext_HighConcurrency(t *testing.T) {
 			defer wg.Done()
 
 			// Vary the command configurations
-			var cmd *Command
+			var cmd *Process
 			switch id % 3 {
 			case 0:
 				cmd = New(parentCtx).Timeout(5 * time.Second)

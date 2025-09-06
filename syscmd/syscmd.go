@@ -9,22 +9,30 @@ import (
 	"github.com/cenkalti/backoff/v4"
 )
 
+// Executor defines the behavior required to run system commands.
+type Command interface {
+	Execute(name string, args ...string) (string, error)
+}
+
 // Command provides a fluent interface for executing system commands with timeout and retry
 //
 // Example usage:
 //
 //	cmd := syscmd.New(ctx).Retry(3, 3*time.Second).Timeout(10*time.Second)
 //	output, err := cmd.Execute("curl", "-f", "https://api.example.com")
-type Command struct {
+type Process struct {
 	ctx        context.Context
 	timeout    time.Duration
 	retries    int
 	retryDelay time.Duration
 }
 
+// Ensure Command implements Executor at compile time
+var _ Command = (*Process)(nil)
+
 // New creates a new system command instance with context and default values
-func New(ctx context.Context) *Command {
-	return &Command{
+func New(ctx context.Context) *Process {
+	return &Process{
 		ctx:        ctx,
 		timeout:    30 * time.Second, // default timeout
 		retries:    0,                // no retries by default
@@ -33,20 +41,20 @@ func New(ctx context.Context) *Command {
 }
 
 // Timeout sets the timeout for command execution
-func (c *Command) Timeout(timeout time.Duration) *Command {
+func (c *Process) Timeout(timeout time.Duration) *Process {
 	c.timeout = timeout
 	return c
 }
 
 // Retry sets the number of retries and delay between retries
-func (c *Command) Retry(retries int, delay time.Duration) *Command {
+func (c *Process) Retry(retries int, delay time.Duration) *Process {
 	c.retries = retries
 	c.retryDelay = delay
 	return c
 }
 
 // Execute runs the command with the configured timeout and retry settings
-func (c *Command) Execute(name string, args ...string) (string, error) {
+func (c *Process) Execute(name string, args ...string) (string, error) {
 	var finalOutput string
 
 	operation := func() error {
