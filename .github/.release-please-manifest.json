@@ -1,4 +1,4 @@
 {
-    "rabbitmq": "0.1.0",
+    "rabbitmq": "0.2.0",
     "syscmd": "1.0.1"
 }
