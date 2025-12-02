@@ -15,11 +15,6 @@ type Command interface {
 }
 
 // Command provides a fluent interface for executing system commands with timeout and retry
-//
-// Example usage:
-//
-//	cmd := syscmd.New(ctx).Retry(3, 3*time.Second).Timeout(10*time.Second)
-//	output, err := cmd.Execute("curl", "-f", "https://api.example.com")
 type Process struct {
 	ctx        context.Context
 	timeout    time.Duration
