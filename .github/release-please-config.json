@@ -6,7 +6,7 @@
       },
       "database": {
         "release-type": "go",
-        "package-name": "database"
+        "package-name": "syscmd"
       }
     }
   }
