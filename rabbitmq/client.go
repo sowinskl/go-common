@@ -26,8 +26,6 @@ type Client struct {
 }
 
 // NewClient creates a new Client.
-// It attempts to connect immediately. If the initial connection fails, it returns an error (Fail Fast).
-// If successful, it launches a background goroutine to handle future reconnections indefinitely.
 func NewClient(cfg Config) (*Client, error) {
 	if cfg.ReconnectDelay == 0 {
 		cfg.ReconnectDelay = time.Second
