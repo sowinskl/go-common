@@ -1,4 +1,4 @@
-module gtihub.com/sowinskl/go-common/rabbitmq
+module github.com/sowinskl/go-common/rabbitmq
 
 go 1.25.4
 

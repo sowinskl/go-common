@@ -2,11 +2,13 @@
     "packages": {
       "rabbitmq": {
         "release-type": "go",
-        "package-name": "rabbitmq"
+        "package-name": "rabbitmq",
+        "tag-separator": "/"
       },
       "syscmd": {
         "release-type": "go",
-        "package-name": "syscmd"
+        "package-name": "syscmd",
+        "tag-separator": "/"
       }
     }
   }
