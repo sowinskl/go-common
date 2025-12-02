@@ -75,12 +75,9 @@ func (c *Process) Execute(name string, args ...string) (string, error) {
 	}
 
 	if c.retries > 0 {
-		// Use exponential backoff with jitter that respects context cancellation
 		b := backoff.NewExponentialBackOff()
 		b.InitialInterval = c.retryDelay
 		b.MaxElapsedTime = time.Duration(c.retries+1) * c.retryDelay * 2
-
-		// Make backoff respect the parent context
 		contextBackoff := backoff.WithContext(b, c.ctx)
 		err := backoff.Retry(operation, backoff.WithMaxRetries(contextBackoff, uint64(c.retries)))
 		if err != nil {
