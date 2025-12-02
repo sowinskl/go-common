@@ -1,0 +1,12 @@
+{
+    "packages": {
+      "rabbitmq": {
+        "release-type": "go",
+        "package-name": "rabbitmq"
+      },
+      "database": {
+        "release-type": "go",
+        "package-name": "database"
+      }
+    }
+  }
